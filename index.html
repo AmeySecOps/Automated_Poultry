@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Poultry Farm IoT Dashboard</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0e0e0e;
+            color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 30px;
+            font-size: 32px;
+            color: #00eaff;
+        }
+
+        .card {
+            background: #1b1b1b;
+            width: 320px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 0 20px #00eaff40;
+        }
+
+        .value {
+            font-size: 40px;
+            margin-top: 10px;
+            color: #00ffd5;
+        }
+
+        .label {
+            font-size: 20px;
+            opacity: 0.7;
+        }
+
+        .status-on {
+            color: #00ff6a;
+            font-weight: bold;
+        }
+
+        .status-off {
+            color: #ff3b3b;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Automated Poultry Farm Dashboard</h1>
+
+<div class="card">
+    <div class="label">Temperature</div>
+    <div id="temp" class="value">-- °C</div>
+</div>
+
+<div class="card">
+    <div class="label">Humidity</div>
+    <div id="hum" class="value">-- %</div>
+</div>
+
+<div class="card">
+    <div class="label">LDR (Day/Night)</div>
+    <div id="ldr" class="value">--</div>
+</div>
+
+<div class="card">
+    <div class="label">Fan Status</div>
+    <div id="fan" class="value">--</div>
+</div>
+
+<div class="card">
+    <div class="label">LED Light Status</div>
+    <div id="led" class="value">--</div>
+</div>
+
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDS37C27k2btbP0kzLV0trhkl1lni9Er4A",
+        authDomain: "automated-poultry-farmin-46814.firebaseapp.com",
+        databaseURL: "https://automated-poultry-farmin-46814-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "automated-poultry-farmin-46814",
+        storageBucket: "automated-poultry-farmin-46814.firebasestorage.app",
+        messagingSenderId: "313497260768",
+        appId: "1:313497260768:web:766f1559bb9e0f0c8ef685"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    const db = firebase.database();
+
+    // ----------- SENSOR DATA ---------------
+    db.ref("poultry/temperature").on("value", snapshot => {
+        document.getElementById("temp").innerHTML = snapshot.val() + " °C";
+    });
+
+    db.ref("poultry/humidity").on("value", snapshot => {
+        document.getElementById("hum").innerHTML = snapshot.val() + " %";
+    });
+
+    db.ref("poultry/ldr").on("value", snapshot => {
+        let value = snapshot.val() < 300 ? "Day" : "Night";
+        document.getElementById("ldr").innerHTML = value;
+    });
+
+    // ----------- AUTOMATION STATUS ----------
+    db.ref("poultry/fanStatus").on("value", snapshot => {
+        let v = snapshot.val();
+        document.getElementById("fan").innerHTML =
+            v === "ON" ? `<span class="status-on">ON</span>` :
+                         `<span class="status-off">OFF</span>`;
+    });
+
+    db.ref("poultry/lightStatus").on("value", snapshot => {
+        let v = snapshot.val();
+        document.getElementById("led").innerHTML =
+            v === "ON" ? `<span class="status-on">ON</span>` :
+                         `<span class="status-off">OFF</span>`;
+    });
+
+</script>
+
+</body>
+</html>
