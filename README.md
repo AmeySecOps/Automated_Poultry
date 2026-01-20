@@ -91,9 +91,9 @@ Folder: /website
 3. Save → Site goes live at:
 
 ```
-https://<your-username>.github.io/automated-poultry-farm/
+https://bucket-adjust-31985810.figma.site/
 ```
-
+https://ameysecops.github.io/Automated_Poultry/
 ---
 
 ## 📜 License
