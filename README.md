@@ -78,7 +78,7 @@ Displays:
 esp8266-code/poultry_iot.ino
 ```
 
----
+
 
 ## 🌐 Hosting on GitHub Pages
 
@@ -93,7 +93,10 @@ Folder: /website
 ```
 https://bucket-adjust-31985810.figma.site/
 ```
+4. Default site link
+```
 https://ameysecops.github.io/Automated_Poultry/
+```
 ---
 
 ## 📜 License
